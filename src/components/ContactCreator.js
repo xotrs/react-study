@@ -15,21 +15,20 @@ class ContactCreator extends React.Component {
             this.setState(nextState);
         }
 
-        // handleClick(){
-        //     this.props.onInsert(this.state.contactData.name, this.state.contactData.phone);
-        //     this.setState({
-        //         name:"",
-        //         phone:""
-        //     });
-        // }
+        handleClick(){
+            this.props.onInsert(this.state.name, this.state.phone);
+            this.setState({
+                name:"",
+                phone:""
+            });
+        }
     render(){
         return (
             <div>
                 <p>
                     <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange.bind(this)}/>
                     <input type="text" name="phone" placeholder="phone" value={this.state.phone} onChange={this.handleChange.bind(this)}/>
-                    
-                    
+                    <button onClick={this.handleClick.bind(this)}>Insert</button>                   
                 </p>
             </div>
         );

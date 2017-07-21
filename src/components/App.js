@@ -9,7 +9,6 @@ class App extends React.Component {
         return (
             <div>
                 <Contacts />
-                <ContactCreator />
             </div>
         );
     }
