@@ -2,6 +2,7 @@ import React from 'react';
 import ContactInfo from './ContactInfo'
 import ContactCreator from './ContactCreator'
 import ContactRemover from './ContactRemover'
+import ContactEditor from './ContactEditor'
 import update from 'react-addons-update'
 
 class Contacts extends React.Component {
@@ -41,6 +42,26 @@ class Contacts extends React.Component {
         });
     }
 
+    _editContact(name, phone){
+        this.setState({
+            contactData: update(
+                this.state.contactData,
+                {
+                    [this.state.selectedKey]: {
+                        name: { $set: name },
+                        phone: { $set: phone }
+                    }
+                }
+            ),
+            selected: {
+                name: name,
+                phone: phone
+            }
+        });
+
+    }
+
+
 
     _onSelect(key){
         //이미 선택 되어있는 키를 한번 더 누르면 Cancel
@@ -53,7 +74,8 @@ class Contacts extends React.Component {
         }
         //키를 누르면 setState
         this.setState({
-            selectedKey: key
+            selectedKey: key,
+            selected: this.state.contactData[key]
         });
         console.log(key + "is selected");
     }
@@ -82,6 +104,9 @@ class Contacts extends React.Component {
                 </ul>
                 <ContactCreator onInsert={this._insertContact.bind(this)}/>
                 <ContactRemover onRemove={this._removeContact.bind(this)}/>
+                <ContactEditor onEdit={this._editContact.bind(this)}
+                           isSelected={(this.state.selectedKey !=-1)}
+                           contact={this.state.selected}/>
             </div>
         );
 

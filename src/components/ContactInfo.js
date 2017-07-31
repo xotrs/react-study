@@ -6,6 +6,11 @@ class ContactInfo extends React.Component {
     handleClick(){
         this.props.onSelect(this.props.contactKey);
     }
+
+    shouldComponentUpdate(nextProps, nextState){
+    	return (JSON.stringify(nextProps) != JSON.stringify(this.props));	
+    } 
+
     render() {
         let getStyle = isSelect => {
             if(!isSelect) return;
