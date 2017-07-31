@@ -1,6 +1,7 @@
 import React from 'react';
 import ContactInfo from './ContactInfo'
 import ContactCreator from './ContactCreator'
+import ContactRemover from './ContactRemover'
 import update from 'react-addons-update'
 
 class Contacts extends React.Component {
@@ -23,6 +24,23 @@ class Contacts extends React.Component {
     });
         this.setState(newState);
     }
+
+    _removeContact(){
+        if(this.state.selectedKey == -1){
+            console.log("contact not selected");
+            return;
+        }
+        this.setState({
+            contactData: update(
+                this.state.contactData,
+                {
+                    $splice: [[this.state.selectedKey, 1]]
+                }
+            ),
+            selectedKey: -1
+        });
+    }
+
 
     _onSelect(key){
         //이미 선택 되어있는 키를 한번 더 누르면 Cancel
@@ -63,6 +81,7 @@ class Contacts extends React.Component {
                     })}
                 </ul>
                 <ContactCreator onInsert={this._insertContact.bind(this)}/>
+                <ContactRemover onRemove={this._removeContact.bind(this)}/>
             </div>
         );
 
